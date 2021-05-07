@@ -39,13 +39,13 @@ Please note that user registration & login system is missing in this app because
 **1.** We first need to create an invoice ID and amount in the DB which will be linked to a certain user (please check `models.py` for more info). I have used uuid for generating invoice ID.
 ```bash
 invoice_id = uuid.uuid4()
-amount = 50000      # amount should be in Paise
+amount = 500
 user = customer.id      # or anything you want
 ```
 **2.** Generating Razorpay order ID (Please refer to `views.py` file for details)
 ```bash
 fetch_invoice = Transaction.objects.get(invoice_id=invoice)
-order_amount = fetch_invoice.amount * 100
+order_amount = fetch_invoice.amount * 100       # amount should be in Paise
 
 # CREATING ORDER
 response = client.order.create(dict(amount=order_amount, 
