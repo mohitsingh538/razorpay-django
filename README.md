@@ -108,4 +108,4 @@ if h == response['razorpay_signature']:
 
 ### Contact
 
-**Issues should be raised directly in the repository.** For additional questions or comments please email me at mohit@terrebrown.com
+**Issues should be raised directly in the repository.** Feel free to write if you need help with this repo.
