@@ -6,7 +6,7 @@
 
 # Introduction
 
-The [documentation](https://razorpay.com/docs/payment-gateway/server-integration/python/) provided by Razorpay for Python is not detailed, and somewhat confusing for newbies. Moreover, the default [package](https://pypi.org/project/razorpay/) has some bugs. Most likely, you'd end up getting 'None' response while verifying payment signature if you are using the official razorpay package.
+The [documentation](https://razorpay.com/docs/payment-gateway/server-integration/python/) provided by Razorpay for Python is not detailed, and somewhat confusing for newbies. Moreover, the [official](https://pypi.org/project/razorpay/) package has some bugs. Most likely, you'd end up getting 'None' response while verifying payment signature if you are using the official razorpay package.
 
 My Django app is based on the default package with some tweaks that I'd be explaining later.
 
