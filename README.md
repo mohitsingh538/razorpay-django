@@ -99,12 +99,7 @@ c_msg = bytes(f"{response['razorpay_order_id']}|{response['razorpay_payment_id']
 h = hmac.new(c_key, c_msg, hashlib.sha256).hexdigest()
 
 if h == response['razorpay_signature']:
-    params_dict = {
-        'razorpay_payment_id': response['razorpay_payment_id'],
-        'razorpay_order_id': response['razorpay_order_id'],
-        'razorpay_signature': response['razorpay_signature']
-    }
-        
+
     amount = (client.payment.fetch(response['razorpay_payment_id']))['amount']     # Getting amount for capturing payment
     capture = client.payment.capture(response['razorpay_payment_id'], amount)     # Capturing payment
 
