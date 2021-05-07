@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pay for invoice ID {{ invoice_details.invoice_id }}</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+</head>
+<body>
+    <div id="invoice">
+        {% if not invoice_details.razorpay_data.status %}
+        <div class="toolbar hidden-print">
+            <div class="text-right">
+                <a onclick="$('form#razorpay_payment').submit();">
+                    <button class="btn btn-info" type="button"><i class="fa fa-print"></i> Pay</button>
+                </a>
+                <button class="btn btn-info"><i class="fa fa-file-pdf-o"></i> Export as PDF</button>
+            </div>
+            <hr>
+        </div>
+        <!------ RAZORPAY PAYMENT FORM ------>
+            <form action="{% url 'payment_status' %}?invoice={{ invoice_details.invoice_id }}" method="POST" name="razorpay_payment" id="razorpay_payment">
+                {% csrf_token %}
+                <script src="https://checkout.razorpay.com/v1/checkout.js"
+                   data-key="{{ key_id }}"
+                   data-amount={{ invoice_details.amount }}
+                   data-currency="INR"
+                   data-order_id="{{ invoice_details.razorpay_data.rzp_order_id }}"
+                   data-name="YOUR COMPANY NAME"
+                   data-description="PRODUCT/SERVICE DESCRIPTION HERE"
+                   data-image="link-to-your-logo-here"
+                   data-prefill.name="{{ user.first_name }} {{ user.last_name }}"
+                   data-prefill.email="{{ user.email }}"
+                   data-theme.color="#7b68ee">
+                </script>
+            </form>
+        <!------ END RAZORPAY PAYMENT FORM ------>
+        {% else %}
+            This invoice is already paid.
+        {% endif %}
+        <div class="invoice overflow-auto">
+            <div style="min-width: 600px">
+                <header>
+                    <div class="row">
+                        <div class="col">
+                            <a target="_blank" href="">
+                                <img src="https://www.freeiconspng.com/uploads/credit-card-2-icon-7.png" width="150" alt="Credit Card 2 Icon" />
+                                </a>
+                        </div>
+                        <div class="col company-details">
+                            <h2 class="name">
+                                <a target="_blank" href="">
+                                YOUR COMPANY
+                                </a>
+                            </h2>
+                            <div>455 Foggy Heights, AZ 85004, US</div>
+                            <div>(123) 456-789</div>
+                            <div>company@example.com</div>
+                        </div>
+                    </div>
+                </header>
+                <main>
+                    <div class="row contacts">
+                        <div class="col invoice-to">
+                            <div class="text-gray-light">INVOICE TO:</div>
+                            <h2 class="to">John Doe</h2>
+                            <div class="address">796 Silver Harbour, TX 79273, US</div>
+                            <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
+                        </div>
+                        <div class="col invoice-details">
+                            <h1 class="invoice-id">INVOICE 3-2-1</h1>
+                            <div class="date">Date of Invoice: 25/05/2021</div>
+                            {% if not invoice_details.razorpay_data.status %}
+                                <div class="date">Due Date: 30/05/2021</div>
+                            {% else %}
+                                <div class="date">Paid on: {{ invoice_details.razorpay_data.paid_on|date }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th class="text-left">DESCRIPTION</th>
+                                <th class="text-right">HOUR PRICE</th>
+                                <th class="text-right">HOURS</th>
+                                <th class="text-right">TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="no">04</td>
+                                <td class="text-left"><h3>
+                                    Youtube channel
+                                    </h3>
+                                       Useful videos to improve your Javascript skills. Subscribe and stay tuned :)
+                                </td>
+                                <td class="unit">₹0.00</td>
+                                <td class="qty">100</td>
+                                <td class="total">₹0.00</td>
+                            </tr>
+                            <tr>
+                                <td class="no">01</td>
+                                <td class="text-left"><h3>Website Design</h3>Creating a recognizable design solution based on the company's existing visual identity</td>
+                                <td class="unit">₹40.00</td>
+                                <td class="qty">30</td>
+                                <td class="total">₹1,200.00</td>
+                            </tr>
+                            <tr>
+                                <td class="no">02</td>
+                                <td class="text-left"><h3>Website Development</h3>Developing a Content Management System-based Website</td>
+                                <td class="unit">₹40.00</td>
+                                <td class="qty">80</td>
+                                <td class="total">₹3,200.00</td>
+                            </tr>
+                            <tr>
+                                <td class="no">03</td>
+                                <td class="text-left"><h3>Search Engines Optimization</h3>Optimize the site for search engines (SEO)</td>
+                                <td class="unit">₹40.00</td>
+                                <td class="qty">20</td>
+                                <td class="total">₹800.00</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td colspan="2">SUBTOTAL</td>
+                                <td>₹5,200.00</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td colspan="2">TAX 25%</td>
+                                <td>₹1,300.00</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td colspan="2">GRAND TOTAL</td>
+                                <td>₹6,500.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="thanks">Thank you!</div>
+                    <div class="notices">
+                        <div>NOTICE:</div>
+                        <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+                    </div>
+                </main>
+                <footer>
+                    Invoice was created on a computer and is valid without the signature and seal.
+                </footer>
+            </div>
+            <div></div>
+        </div>
+    </div>
+</body>
+</html>
