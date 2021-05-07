@@ -24,7 +24,7 @@ def payment(request):
             fetch_invoice = Transaction.objects.get(invoice_id=invoice)
 
             if not fetch_invoice.razorpay_data.rzp_order_id:
-                order_amount = int(fetch_invoice.amount) * 100  # Since Razorpay accepts amount format in Paise,
+                order_amount = fetch_invoice.amount * 100  # Since Razorpay accepts amount format in Paise,
                 # so Rs.500 should be 50000
 
                 # CREATING ORDER
