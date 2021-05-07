@@ -1,7 +1,6 @@
 # Razorpay - Django Secure Integration
 
-
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+<img src="https://upload.wikimedia.org/wikipedia/en/8/89/Razorpay_logo.svg" width="200px">
 
 
 
