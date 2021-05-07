@@ -87,7 +87,7 @@ order_status = response['status']
 
 ![Successfully integrated](https://github.com/ohlc-ai/razorpay-django/blob/master/static/payments.png?raw=true)
 
-**5.** On successful payment, Razorpay would send `razorpay_payment_id`, `razorpay_order_id` and `razorpay_signature` response via POST:
+**5.** If payment is authorised, Razorpay would send `razorpay_payment_id`, `razorpay_order_id` and `razorpay_signature` response via POST:
 
 ```bash
 response = request.POST
